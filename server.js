@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken')
 const bodyParser = require('body-parser')
 
 require('./Utils/common.js')()
-const { check, validationResult } = require('express-validator/check')
+
 const http = require('http').Server(app)
 
 require('dotenv').config()
@@ -89,9 +89,7 @@ async function adminauth(request, response, next) {
 app.auth = auth
 app.adminauth = adminauth
 
-const validator = {}
-validator.check = check
-validator.validation = validationResult
+
 
 
 
