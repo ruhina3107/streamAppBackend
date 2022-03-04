@@ -131,13 +131,13 @@ app.get('/', function(req, res) {
 require('./routes/AdminRoutes')(app)
 
 
-// server.listen(process.env.PORT, function() {
-//     console.log('Server is running on', process.env.PORT)
-    
-// })
-
-http.listen(process.env.PORT, function() {
+server.listen(process.env.PORT, function() {
     console.log('Server is running on', process.env.PORT)
-   
+    
 })
+
+// http.listen(process.env.PORT, function() {
+//     console.log('Server is running on', process.env.PORT)
+   
+// })
 
