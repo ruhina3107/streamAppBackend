@@ -22,7 +22,7 @@ const upload = multer({ storage: storage })
   
     //login Route
   
-    app.post(`/login`, [],  (req, res) => {
+    app.post(`/api/login`, [],  (req, res) => {
         var response = {}
         var data = req.body 
         console.log(data)
@@ -43,7 +43,7 @@ const upload = multer({ storage: storage })
 
     
   //Register Employee Route
-  app.post(`/register`, [],  (req, res) => {
+  app.post(`/api/register`, [],  (req, res) => {
     var response = {}
     var data = req.body 
     console.log(data)
