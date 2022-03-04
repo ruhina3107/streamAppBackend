@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const path = require('path')
+const fs = require('fs');
 app.use(cors())
 app.use('/public', express.static(path.join(__dirname, 'public')))
 var jwt = require('jsonwebtoken')
@@ -10,6 +11,7 @@ const bodyParser = require('body-parser')
 require('./Utils/common.js')()
 
 const http = require('http').Server(app)
+const https = require('https');
 
 require('dotenv').config()
 
@@ -21,6 +23,34 @@ app.use('/', function(request, response, next) {
     next()
 })
 
+app.use('/', function(request, response, next) {
+   
+    response.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    response.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+  
+    request.headers.lang = request.headers.lang || 'default'
+    console.log(`IP: ${request.connection.remoteAddress} Method: ${request.method} Route: ${request.originalUrl} Body: ` + JSON.stringify(request.body))
+    next()
+})
+
+var privateKey  = fs.readFileSync(path.join(__dirname+'/SSL/auth.key'), 'utf8');
+
+var certificate = fs.readFileSync(path.join(__dirname+'/SSL/domain.crt'), 'utf8');
+
+const options = {key: privateKey, cert: certificate};
+console.log(options)
+var server = https.createServer(options, app);
 async function auth(request, response, next) {
     var error = {}
     try {
@@ -101,8 +131,13 @@ app.get('/', function(req, res) {
 require('./routes/AdminRoutes')(app)
 
 
+// server.listen(process.env.PORT, function() {
+//     console.log('Server is running on', process.env.PORT)
+    
+// })
+
 http.listen(process.env.PORT, function() {
     console.log('Server is running on', process.env.PORT)
-    var d = new Date()
+   
 })
 

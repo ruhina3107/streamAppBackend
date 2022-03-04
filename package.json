@@ -1,7 +1,7 @@
 {
-  "name": "stream-app",
+  "name": "job-portal-backend",
   "version": "1.0.0",
-  "description": "Stream App Backend",
+  "description": "Job Portal Backend",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

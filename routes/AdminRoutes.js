@@ -62,6 +62,25 @@ const upload = multer({ storage: storage })
     })        
 })
 
+
+app.post(`/getUsers`, [],  (req, res) => {
+  var response = {}
+  
+  adminAuthService.getUsersRegistered(req, (result) => {
+     
+      if (result.error) {
+        response.status = 0
+     
+      } else {
+          console.log("in")
+        response.status = 1
+        response = result.data
+      }
+      console.log("final ",response)
+      return res.send(response)
+  })        
+})
+
   
 }
 
