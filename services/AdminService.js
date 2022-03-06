@@ -10,13 +10,13 @@ module.exports = function () {
     var response = {}
     try {
       var admin = {}
-      admin.userMail = data.Email
+      admin.userName = data.Email
       var adminDetailsData = await adminAuthRepository.fetchadminDetails(admin)
       console.log(adminDetailsData)
       if (adminDetailsData.error === false) {
         var adminDetails = adminDetailsData.data[0]
         var compare = await common.comparePassword(data.Password, adminDetails.password)
-        if (adminDetails.userMail === data.Email && compare === true || (adminDetails.userMail === data.Email &&  adminDetails.password === data.Password)) {
+        if (adminDetails.userName === data.Email && compare === true || (adminDetails.userName === data.Email &&  adminDetails.password === data.Password)) {
           var adminAuth = {}
           adminAuth.Id = adminDetails.Id
           adminAuth.Roles = 'admin'

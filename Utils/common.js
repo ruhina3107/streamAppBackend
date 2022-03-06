@@ -2,6 +2,7 @@ module.exports = function () {
   const bcrypt = require('bcryptjs')
   const multer = require('multer')
 var jwt = require('jsonwebtoken')
+const authy = require('authy')(process.env.TWILIO_KEY)
 
 this.generateToken = function (data, secret) {
     return new Promise(function (resolve) {
@@ -60,6 +61,55 @@ this.generateToken = function (data, secret) {
         })
       } catch (err) {
         err.error = true
+        resolve(err)
+      }
+    })
+  }
+
+  this.sendOtpMobile = function (mobileNumber, countryCode) {
+    console.log("inOtp")
+    var response = {}
+    return new Promise(function (resolve) {
+      try {
+         authy.phones().verification_start(mobileNumber, countryCode, { via: 'sms', locale: 'en' }, function (err, res) {
+           if (res) {
+        response.error = false
+         response.data = res
+           } else {
+             response.error = true
+             response.data = null
+             response.msg = err.message
+           }
+           console.log(response)
+           resolve(response)
+         })
+      } catch (err) {
+        console.log(response)
+        err.error = true
+        err.msg = 'FAILED'
+        resolve(err)
+      }
+    })
+  }
+
+  this.otpVerify = function (mobileNumber, countryCode, otp) {
+    var response = {}
+    return new Promise(function (resolve) {
+      try {
+        authy.phones().verification_check(mobileNumber, countryCode, otp, function (err, res) {
+          if (res) {
+            response.error = false
+            response.data = res
+          } else {
+            response.error = true
+            response.data = null
+            response.msg = err.message
+          }
+          resolve(response)
+        })
+      } catch (err) {
+        err.error = true
+        err.msg = 'FAILED'
         resolve(err)
       }
     })

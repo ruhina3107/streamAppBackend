@@ -49,7 +49,7 @@ var privateKey  = fs.readFileSync(path.join(__dirname+'/SSL/auth.key'), 'utf8');
 var certificate = fs.readFileSync(path.join(__dirname+'/SSL/domain.crt'), 'utf8');
 
 const options = {key: privateKey, cert: certificate};
-console.log(options)
+
 var server = https.createServer(options, app);
 async function auth(request, response, next) {
     var error = {}
@@ -129,15 +129,16 @@ app.get('/', function(req, res) {
     res.sendfile('index.html');
 });
 require('./routes/AdminRoutes')(app)
+require('./routes/UserRoutes')(app)
 
 
-server.listen(process.env.PORT, function() {
-    console.log('Server is running on', process.env.PORT)
-    
-})
-
-// http.listen(process.env.PORT, function() {
+// server.listen(process.env.PORT, function() {
 //     console.log('Server is running on', process.env.PORT)
-   
+    
 // })
+
+http.listen(process.env.PORT, function() {
+    console.log('Server is running on', process.env.PORT)
+   
+})
 
