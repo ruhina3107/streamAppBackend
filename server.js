@@ -120,11 +120,6 @@ app.auth = auth
 app.adminauth = adminauth
 
 
-
-
-
-
-
 app.get('/', function(req, res) {
     res.sendfile('index.html');
 });
@@ -132,13 +127,13 @@ require('./routes/AdminRoutes')(app)
 require('./routes/UserRoutes')(app)
 
 
-// server.listen(process.env.PORT, function() {
-//     console.log('Server is running on', process.env.PORT)
-    
-// })
-
-http.listen(process.env.PORT, function() {
+server.listen(process.env.PORT, function() {
     console.log('Server is running on', process.env.PORT)
-   
+    
 })
+
+// http.listen(process.env.PORT, function() {
+//     console.log('Server is running on', process.env.PORT)
+   
+// })
 
