@@ -1,5 +1,4 @@
-
-module.exports = function(server, validator) 
+module.exports = function(server) 
 {
     const basePath = '/api/users/'
     const UserController = require('../controller/UserController.js')
